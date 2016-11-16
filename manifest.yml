@@ -1,0 +1,8 @@
+applications:
+- name: work-order
+  path: build/libs/work-order-0.1.0.jar
+  memory: 256M
+  buildpack: java_buildpack
+  instances: 1
+  env:
+     SPRING_PROFILES_ACTIVE: "cloud" 

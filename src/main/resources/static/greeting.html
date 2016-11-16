@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Getting Started: Serving Web Content</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<p th:text="'Hello123, ' + ${name} + '!'" />
+	<h1>Dalton Direct Flooring of Augusta Work Order</h1>
+	<h2>3405 Washington Road</h2>
+	<h2>Martinez, GA 30907</h2>
+	<h2>706-860-4006</h2>
+	<p id="date"></p>
+	Installers:
+	<input type="text" name="installerOne">
+	<input type="text" name="installerTwo">
+	<br> Starting Date:
+	<input type="date" name="startingDate">
+	<br> Customer Name:
+	<input type="text" name="customerName">
+	<br> Address:
+	<input type="text" name="address">State:
+	<input type="text" name="state"> City:
+	<input type="text" name="city">
+	<br> Zip:
+	<input type="text" name="zip">
+	<br> Job Phone:
+	<input type="text" name="jobPhone"> Access Codes:
+	<input type="text" name="accessCodes">
+	<br> Description of work:
+	<br>
+	<textarea rows="5" cols="80" id="descriptionOfWord"></textarea>
+	<h3>Labor Costs</h3>
+	<table border="2">
+		<tbody>
+			<tr>
+				<td><input type="text" name="cellOne"></td>
+				<td><input type="text" name="cellTwo"></td>
+			</tr>
+			<tr>
+				<td><input type="text" name="cellThree"></td>
+				<td><input type="text" name="cellFour"></td>
+			</tr>
+			<tr>
+				<td><input type="text" name="cellFive"></td>
+				<td><input type="text" name="cellSix"></td>
+			</tr>
+			<tr>
+				<td>Total Amount</td>
+				<td><input type="text" name="cellEight"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<script>
+		document.getElementById("date").innerHTML = Date();
+	</script>
+
+</body>
+</html>

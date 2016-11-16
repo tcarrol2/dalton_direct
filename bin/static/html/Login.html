@@ -1,0 +1,16 @@
+<!-- Start of Login Dialog -->  
+<div id="dialog1" class="window" >
+  <div class="d-header">
+  	<p id="loginParagraph">Please login to authenticate yourself. </p>
+   	<div style="color: red; font-weight: bold; margin-left: 100px;" id="errorDiv"></div> 
+    <input type="text" name="j_username" value="username" onclick="removeUserNameMask()"  onblur="addUserNameMask()" id="usernameId" maxlength="20" size="10"/><br/><br/>
+    <input type="password" name="j_password" value="Password" onclick="removePasswordMask()" onkeypress="return checkAndSubmit(event)" onfocus="removePasswordMask()" onblur="addpasswordMask()" id="passwordId" maxlength="20" size="10"/>  
+  </div>
+  <div class="d-blank"></div>
+  <div class="d-login">
+  	<!--<input id="login" type="image" style="margin-left: 50px; margin-top:10px;" value="Login" alt="Login" title="Login" onclick="validate();" src="images/login-button.png">-->
+  	<button class="btn" onclick="validate();" style="margin-left: 50px; margin-top:10px;" value="Login" title="Login" id="loginButton">Log In</button>
+  	<button class="btn" onclick="hideLoginDialog();" id="cancelLogin">Cancel</button>
+  </div>
+</div>
+<!-- End of Login Dialog --> 

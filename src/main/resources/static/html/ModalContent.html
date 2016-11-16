@@ -1,0 +1,13 @@
+<div class="modal-header">
+	<h4 class="modal-title">Plan Load SKUs</h4>
+</div>
+<div class="modal-body">
+	<div ui-grid="subGridOrderDayLoads" class="subGridOrderDayLoads"
+		ui-grid-auto-resize ng-cloak ui-grid-exporter></div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-warning" type="button" ng-click="cancel()">View
+		All Order Groups</button>
+	<button class="btn btn-primary" type="button" ng-click="submit()">View
+		Order Group ID: {{orderGroupID}}</button>
+</div>
