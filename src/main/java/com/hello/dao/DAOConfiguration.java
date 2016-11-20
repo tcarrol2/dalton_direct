@@ -39,6 +39,11 @@ public class DAOConfiguration{
 		return new PersonDAO();
 	}
 	
+	@Bean(name = "workOrderDAO")
+	public WorkOrderDAO getWorkOrderDAO(){
+		return new WorkOrderDAO();
+	}
+	
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();

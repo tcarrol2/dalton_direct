@@ -19,8 +19,8 @@ public class PersonController {
 
 	@Autowired
 	private PersonManager personManager;
-	
-	@RequestMapping(value="/sourceLocationId/{id}",method=RequestMethod.GET)
+
+	@RequestMapping(value="/sourceLocationId}",method=RequestMethod.GET)
 	public List<PersonDetailsTO> 
 				getPersonDetailsBySourceLocationId(@PathVariable("id") String sourceLocationId) {
 		

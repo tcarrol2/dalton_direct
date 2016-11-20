@@ -10,4 +10,9 @@ public class ManagerConfiguration {
 	public PersonManager getPersonManager(){
 		return new PersonManager();
 	}
+	
+	@Bean(name="workOrderManager")
+	public WorkOrderManager getWorkOrderManager(){
+		return new WorkOrderManager();
+	}
 }

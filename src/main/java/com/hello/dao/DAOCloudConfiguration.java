@@ -29,5 +29,10 @@ public class DAOCloudConfiguration extends AbstractCloudConfig{
 		return new PersonDAO();
 	}
 	
+	@Bean(name = "workOrderDAO")
+	public WorkOrderDAO getWorkOrderDAO(){
+		return new WorkOrderDAO();
+	}
+	
 	
 }

@@ -1,0 +1,1 @@
+var app = angular.module('app', ['ngAnimate', 'angular-loading-bar', 'ngTouch', 'ui.grid', 'ui.grid.resizeColumns', 'ui.grid.exporter', 'ui.grid.selection', 'ui.grid.expandable', 'ui.bootstrap', 'ui.grid.autoResize', 'ngDraggable']);

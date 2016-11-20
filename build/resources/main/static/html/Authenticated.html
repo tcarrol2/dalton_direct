@@ -1,0 +1,18 @@
+<script type="text/javascript">
+function closePopup(){
+	getUserDetails();
+	enableButtons();
+	hideModule("nav_user");
+	hideModule("fade");
+	return false;
+}
+</script>
+<div id="dialog1" class="window" >
+  <div class="d-header">
+  	<p>You are already authenticated. Please click OK button to close the pop-up.</p>
+  </div>
+  <div class="d-blank"></div>
+  <div class="d-login">
+  		<button onclick="closePopup()" id="okButton" style="margin-left: 75px;">OK</button>
+  </div>
+</div>

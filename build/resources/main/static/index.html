@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+<meta
+	http-equiv="content-type"
+	content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>Work Orders</title>
+<meta
+	name="description"
+	content="">
+<meta
+	name="viewport"
+	content="width=device-width" />
+<link
+	rel="shortcut icon"
+	href="images/TLR.png" />
+<link
+	rel="stylesheet"
+	href="css/bootstrap.css" />
+<link
+	rel="stylesheet"
+	href="css/bootstrap-theme.css" />
+<link
+	rel="stylesheet"
+	href="css/custom.css" />
+<link
+	rel="stylesheet"
+	href="css/navbar-fixed-top.css" />
+<link
+	rel="stylesheet"
+	href="css/loading-bar.css" />
+<link
+	rel="stylesheet"
+	href="css/ui-grid.css" />
+<script src="js/vendor/jquery-1.10.1.min.js"></script>
+<script src="js/vendor/angular.js"></script>
+<script src="js/vendor/angular-touch.js"></script>
+<script src="js/vendor/angular-animate.js"></script>
+<script src="js/vendor/ui-bootstrap-tpls-0.13.3.js"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/vendor/csv.js"></script>
+<script src="js/vendor/pdfmake.js"></script>
+<script src="js/vendor/vfs_fonts.js"></script>
+<script src="js/vendor/ui-grid.js"></script>
+<script src="js/vendor/loading-bar.js"></script>
+<script src="js/vendor/login.js"></script>
+<script src="js/vendor/draggable.js"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button
+					type="button"
+					class="navbar-toggle collapsed"
+					data-toggle="collapse"
+					data-target="#navbar">
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<div class="navbar-brand">
+					<img
+						src="images/work_order.png"
+						height="65"
+						width="120"
+						class="tlrImage1"> <img
+						src="images/work_order.jpg"
+						height="65"
+						width="120"
+						class="tlrImage2">
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Tabs -->
+	<ul class="nav nav-tabs">
+		<li class="active"><a
+			data-toggle="tab"
+			href="#sectionA"
+			class="redTab">Work Orders</a></li>
+		<li><a
+			data-toggle="tab"
+			href="#sectionB"
+			class="redTab">Pre-Plan</a></li>
+		<li><a
+			data-toggle="tab"
+			href="#sectionC"
+			class="redTab"
+			ng-click="showForecast=true;">Load Planning Forecast</a></li>
+		<li><a
+			data-toggle="tab"
+			href="#sectionD"
+			class="redTab">SKU Dimensions</a></li>
+		<li><a
+			data-toggle="tab"
+			href="#sectionE"
+			class="redTab">Load Group Parameters</a></li>
+
+	</ul>
+
+	<!-- Tab Content -->
+	<div class="tab-content">
+
+		<!-- Order Day Tab -->
+		<div
+			id="sectionA"
+			class="tab-pane fade in active">
+			<div ng-controller="OrderDayController">
+				<div
+					class="tab-buttons"
+					ng-cloak>
+					<fieldset>
+						<div class="control-group">
+							<label
+								class="control-label"
+								for="gridOrderDayGroups"></label>
+							<div class="controls">
+								<button
+									id="gridOrderDayGroups"
+									name="gridOrderDayGroups"
+									class="btn btn-primary btn-sm"
+									ng-click="viewGridOrderDayGroups(); showGridOrderDayGroups = true; showStats=false; showOrderDayPlanLoads=false; showOrderDaySKUs=false;"
+									ng-cloak>View All Load Groups</button>
+								<br> <br> <br>
+							</div>
+						</div>
+
+						<form
+							class="form-horizontal"
+							name="myFormLoads">
+							<div class="control-group">
+								<div class="controls">
+									<div class="input-append">
+										<input
+											type="number"
+											min="1"
+											id="orderGroupId"
+											name="orderGroupId"
+											class="input-medium"
+											placeholder="Enter Order Group ID"
+											type="text"
+											ng-model="orderGroupId"
+											required
+											ng-cloak> <span
+											style="color: red"
+											ng-show="myFormLoads.orderGroupId.$dirty && myFormLoads.orderGroupId.$invalid"
+											ng-cloak> </span> <br>
+										<button
+											class="btn btn-success btn-sm"
+											ng-disabled="myFormLoads.orderGroupId.$invalid"
+											ng-click="viewOrderDayLoads(orderGroupId); showOrderDayPlanLoads=true; showGridOrderDayGroups = false; showStats=false; showOrderDaySKUs=false;"
+											ng-cloak>
+											View Loads Built <br /> By Order Group ID
+										</button>
+									</div>
+
+								</div>
+							</div>
+						</form>
+
+						<br> <br>
+
+						<form
+							class="form-horizontal"
+							name="myFormSKUs">
+							<div class="control-group">
+								<div class="controls">
+									<div class="input-append">
+										<input
+											type="number"
+											min="1"
+											id="orderGroupId"
+											name="orderGroupId"
+											class="input-medium"
+											placeholder="Enter Order Group ID"
+											type="text"
+											ng-model="orderGroupId"
+											required
+											ng-cloak> <span
+											style="color: red"
+											ng-show="myFormSKUs.orderGroupId.$dirty && myFormSKUs.orderGroupId.$invalid"
+											ng-cloak> </span> <br>
+										<button
+											class="btn btn-success btn-sm"
+											ng-disabled="myFormSKUs.orderGroupId.$invalid"
+											ng-click="viewMainGridOrderDaySKUs(orderGroupId); showOrderDaySKUs=true; showOrderDayPlanLoads=false; showGridOrderDayGroups = false; showStats=false;"
+											ng-cloak>
+											View SKUs <br /> By Order Group ID
+										</button>
+									</div>
+
+								</div>
+							</div>
+						</form>
+
+						<br> <br>
+
+						<form
+							class="form-horizontal"
+							name="myFormStats">
+							<div class="control-group">
+								<div class="controls">
+									<div class="input-append">
+										<input
+											type="number"
+											min="1"
+											id="orderGroupId"
+											name="orderGroupId"
+											class="input-medium"
+											placeholder="Enter Order Group ID"
+											type="text"
+											ng-model="orderGroupId"
+											required
+											ng-cloak> <span
+											style="color: red"
+											ng-show="myFormStats.orderGroupIdStats.$dirty && myFormStats.orderGroupIdStats.$invalid"
+											ng-cloak> </span> <br>
+										<button
+											class="btn btn-success btn-sm"
+											ng-disabled="myFormStats.orderGroupId.$invalid"
+											ng-click="viewGridStats(orderGroupId); showStats=true; showGridOrderDayGroups = false; showOrderDayPlanLoads=false; showOrderDaySKUs=false;"
+											ng-cloak>
+											View Smoothing Stats <br /> By Order Group ID
+										</button>
+									</div>
+
+								</div>
+							</div>
+						</form>
+					</fieldset>
+				</div>
+				<div ng-show="showGridOrderDayGroups">
+					<div
+						ui-if="gridOrderDayGroups.data.length>0"
+						ui-grid="gridOrderDayGroups"
+						class="gridOrderDayLoads"
+						ui-grid-exporter
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ng-style="getGridOrderDayGroupsHeight()"></div>
+				</div>
+				<div ng-hide="showGridOrderDayGroups"></div>
+				<div ng-show="showStats">
+					<div
+						ui-if="gridStats.data.length>0"
+						ui-grid="gridStats"
+						class="gridOrderDayStats"
+						ui-grid-exporter
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ng-style="getGridStatsHeight()"></div>
+				</div>
+				<div ng-hide="showStats"></div>
+				<div ng-show="showOrderDayPlanLoads">
+					<div
+						ui-if="gridOrderDayLoads.data.length>0"
+						ui-grid="gridOrderDayLoads"
+						ui-grid-exporter
+						class="gridOrderDayLoads"
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ng-style="getGridOrderDayLoadsHeight()"></div>
+				</div>
+				<div ng-hide="showOrderDayPlanLoads"></div>
+				<div ng-show="showOrderDaySKUs">
+					<div
+						ui-if="mainGridOrderDaySKUs.data.length>0"
+						ui-grid="mainGridOrderDaySKUs"
+						ui-grid-exporter
+						class="mainGridOrderDaySKUs"
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ng-style="getMainGridOrderDaySKUsUHeight()"></div>
+				</div>
+				<div ng-hide="showOrderDaySKUs"></div>
+			</div>
+		</div>
+
+		<!-- Pre-Plam Tab -->
+		<div
+			id="sectionB"
+			class="tab-pane fade">
+			<div ng-controller="PrePlanController">
+				<div class="tab-buttons">
+					<fieldset>
+						<div class="control-group">
+							<label
+								class="control-label"
+								for="gridPrePlanOrderGroups"></label>
+							<div class="controls">
+								<button
+									id="gridPrePlanOrderGroups"
+									name="gridPrePlanOrderGroups"
+									class="btn btn-primary btn-sm"
+									ng-click="viewGridPrePlanOrderGroups(); showGridPrePlanOrderGroups = true; showPrePlanStats=false; showPrePlanLoads=false; showPrePlanSKUs=false;"
+									ng-cloak>
+									View All Pre-Plan <br /> Load Groups
+								</button>
+								<br> <br> <br>
+							</div>
+						</div>
+
+						<form
+							class="form-horizontal"
+							name="myFormLoads">
+							<div class="control-group">
+								<div class="controls">
+									<div class="input-append">
+										<input
+											type="number"
+											min="1"
+											id="orderGroupId"
+											name="orderGroupId"
+											class="input-medium"
+											placeholder="Enter Order Group ID"
+											type="text"
+											ng-model="orderGroupId"
+											required> <span
+											style="color: red"
+											ng-show="myFormLoads.orderGroupIdPrePlanLoadsBuilt.$dirty && myFormLoads.orderGroupIdPrePlanLoadsBuilt.$invalid"
+											ng-cloak> </span> <br>
+										<button
+											class="btn btn-success btn-sm"
+											ng-disabled="myFormLoads.orderGroupId.$invalid"
+											ng-click="viewPrePlanLoads(orderGroupId); showPrePlanLoads=true; showPrePlanStats=false; showGridPrePlanOrderGroups = false; showPrePlanSKUs=false;"
+											ng-cloak>
+											View Pre-Plan Loads <br /> Built By Order Group ID
+										</button>
+
+									</div>
+
+								</div>
+							</div>
+						</form>
+
+
+						<br> <br>
+
+						<form
+							class="form-horizontal"
+							name="myFormSKUs">
+							<div class="control-group">
+								<div class="controls">
+									<div class="input-append">
+										<input
+											type="number"
+											min="1"
+											id="orderGroupId"
+											name="orderGroupId"
+											class="input-medium"
+											placeholder="Enter Order Group ID"
+											type="text"
+											ng-model="orderGroupId"
+											required> <span
+											style="color: red"
+											ng-show="myFormSKUs.orderGroupIdPrePlanLoadsBuilt.$dirty && myFormSKUs.orderGroupIdPrePlanLoadsBuilt.$invalid"
+											ng-cloak> </span> <br>
+										<button
+											class="btn btn-success btn-sm"
+											ng-disabled="myFormSKUs.orderGroupId.$invalid"
+											ng-click="viewMainPrePlanSKUs(orderGroupId); showPrePlanSKUs=true; showPrePlanLoads=false; showPrePlanStats=false; showGridPrePlanOrderGroups = false;"
+											ng-cloak>
+											View Pre-Plan SKUs <br /> By Order Group ID
+										</button>
+
+									</div>
+
+								</div>
+							</div>
+						</form>
+
+
+						<br> <br>
+
+						<form
+							class="form-horizontal"
+							name="myFormStats">
+							<div class="control-group">
+								<div class="controls">
+									<div class="input-append">
+										<input
+											type="number"
+											min="1"
+											id="orderGroupId"
+											name="orderGroupId"
+											class="input-medium"
+											placeholder="Enter Order Group ID"
+											type="text"
+											ng-model="orderGroupId"
+											required> <span
+											style="color: red"
+											ng-show="myFormStats.orderGroupIdPrePlanStats.$dirty && myFormStats.orderGroupIdPrePlanStats.$invalid"
+											ng-cloak> </span> <br>
+										<button
+											class="btn btn-success btn-sm"
+											ng-disabled="myFormStats.orderGroupId.$invalid"
+											ng-click="viewPrePlanStats(orderGroupId); showPrePlanStats=true; showPrePlanLoads=false; showGridPrePlanOrderGroups = false; showPrePlanSKUs=false;"
+											ng-cloak>
+											View Smoothing Stats <br /> By Order Group ID
+										</button>
+
+									</div>
+
+								</div>
+							</div>
+						</form>
+
+					</fieldset>
+				</div>
+				<div ng-show="showGridPrePlanOrderGroups">
+					<div
+						ui-if="gridPrePlanOrderGroups.data.length>0"
+						ui-grid="gridPrePlanOrderGroups"
+						class="gridPrePlanOrderGroups"
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ui-grid-exporter
+						ng-style="getGridPrePlanOrderGroupsHeight()"></div>
+				</div>
+				<div ng-hide="showGridPrePlanOrderGroups"></div>
+				<div ng-show="showPrePlanStats">
+					<div
+						ui-if="gridPrePlanStats.data.length>0"
+						ui-grid="gridPrePlanStats"
+						class="prePlanGrid"
+						ui-grid-exporter
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ng-style="getGridPrePlanStatsHeight()"></div>
+				</div>
+				<div ng-hide="showPrePlanStats"></div>
+				<div ng-show="showPrePlanLoads">
+					<div
+						ui-if="gridPrePlanLoads.data.length>0"
+						ui-grid="gridPrePlanLoads"
+						ui-grid-exporter
+						class="prePlanGrid"
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ng-style="getGridPrePlanLoadsHeight()"></div>
+				</div>
+				<div ng-hide="showPrePlanLoads"></div>
+				<div ng-show="showPrePlanSKUs">
+					<div
+						ui-if="mainGridPrePlanSKUs.data.length>0"
+						ui-grid="mainGridPrePlanSKUs"
+						ui-grid-exporter
+						class="prePlanGrid"
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ng-style="getMainGridPrePlanSKUsHeight()"></div>
+				</div>
+				<div ng-hide="showPrePlanSKUs"></div>
+			</div>
+		</div>
+
+		<!-- Forecast Tab -->
+		<div
+			id="sectionC"
+			class="tab-pane fade">
+			<div ng-controller="ForecastController">
+				<div class="tab-buttons">
+					<fieldset>
+						<div class="control-group">
+							<label
+								class="control-label"
+								for="gridAllForecast"></label>
+							<div class="controls">
+								<button
+									id="gridAllForecast"
+									name="gridAllForecast"
+									class="btn btn-primary btn-sm"
+									ng-click="viewAllForecast(); showGridForecast = true;"
+									ng-cloak>
+									View All Load <br /> Planning Forecast
+								</button>
+								<br> <br>
+							</div>
+						</div>
+
+						<form
+							class="form-horizontal"
+							name="myFormForecast">
+							<div class="control-group">
+								<div class="controls">
+									<div class="input-append">
+										<input
+											type="number"
+											min="1"
+											id="orderGroupIdForecast"
+											name="orderGroupIdForecast"
+											class="input-medium"
+											placeholder="Enter Order Group ID"
+											type="text"
+											ng-model="orderGroupIdForecast"
+											required> <span
+											style="color: red"
+											ng-show="myFormForecast.orderGroupIdForecast.$dirty && myFormForecast.orderGroupIdForecast.$invalid"
+											ng-cloak> </span> <br>
+										<button
+											class="btn btn-success btn-sm"
+											ng-disabled="myFormForecast.orderGroupIdForecast.$invalid"
+											ng-click="viewForecastByOrderGroupId(orderGroupIdForecast); showGridForecast = true;"
+											ng-cloak>
+											View Forecast <br />By Order Group ID
+										</button>
+										<br>
+									</div>
+
+								</div>
+							</div>
+						</form>
+					</fieldset>
+				</div>
+				<div ng-show="showGridForecast">
+					<div
+						ui-if="gridForecast.data.length>0"
+						ui-grid="gridForecast"
+						class="forecastGrid"
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ui-grid-exporter
+						ng-style="getGridForecastHeight()"></div>
+				</div>
+				<div ng-hide="showGridForecast"></div>
+			</div>
+		</div>
+
+		<!-- SKU Dimensions Tab -->
+		<div
+			id="sectionD"
+			class="tab-pane fade">
+			<div ng-controller="SkuDimsController">
+				<div class="tab-buttons">
+					<fieldset>
+						<form
+							class="form-horizontal"
+							name="skusMissingDim">
+							<div class="control-group">
+								<div class="controls">
+									<div class="input-append">
+										<input
+											type="number"
+											min="1"
+											id="vendorIdDims"
+											name="vendorIdDims"
+											class="input-medium"
+											placeholder="Enter Vendor Number"
+											type="text"
+											ng-model="vendorIdDims"
+											required> <span
+											style="color: red"
+											ng-show="skusMissingDim.vendorIdDims.$dirty && skusMissingDim.vendorIdDims.$invalid"
+											ng-cloak> </span> <br> <input
+											type="number"
+											min="1"
+											id="rdcIdDims"
+											name="rdcIdDims"
+											class="input-medium"
+											placeholder="Enter RDC Number"
+											type="text"
+											ng-model="rdcIdDims"
+											required> <span
+											style="color: red"
+											ng-show="skusMissingDim.rdcIdDims.$dirty && skusMissingDim.rdcIdDims.$invalid"
+											ng-cloak> </span> <br>
+										<button
+											class="btn btn-danger btn-sm"
+											ng-disabled="skusMissingDim.vendorIdDims.$invalid || skusMissingDim.rdcIdDims.$invalid"
+											ng-click="viewGridSkusMissingDim(vendorIdDims, rdcIdDims); showGridSkusMissingDim = true; showGridSkuDims = false;"
+											ng-cloak>
+											Show SKUs <br />Missing Dimensions
+										</button>
+									</div>
+
+								</div>
+							</div>
+						</form>
+						<br> <br>
+
+						<form
+							class="form-horizontal"
+							name="skuDims">
+							<div class="control-group">
+								<div class="controls">
+									<div class="input-append">
+										<input
+											type="number"
+											min="1"
+											id="vendorIdDims"
+											name="vendorIdDims"
+											class="input-medium"
+											placeholder="Enter Vendor Number"
+											type="text"
+											ng-model="vendorIdDims"
+											required> <span
+											style="color: red"
+											ng-show="skuDims.vendorIdDims.$dirty && skuDims.vendorIdDims.$invalid"
+											ng-cloak> </span> <br> <input
+											type="number"
+											min="1"
+											id="rdcIdDims"
+											name="rdcIdDims"
+											class="input-medium"
+											placeholder="Enter RDC Number"
+											type="text"
+											ng-model="rdcIdDims"
+											required> <span
+											style="color: red"
+											ng-show="skuDims.rdcIdDims.$dirty && skuDims.rdcIdDims.$invalid"
+											ng-cloak> </span> <br> <input
+											type="number"
+											min="1"
+											id="skuIdDims"
+											name="skuIdDims"
+											class="input-medium"
+											placeholder="Enter SKU Number"
+											type="text"
+											ng-model="skuIdDims"
+											required> <span
+											style="color: red"
+											ng-show="skuDims.skuIdDims.$dirty && skuDims.skuIdDims.$invalid"
+											ng-cloak> </span> <br>
+										<button
+											class="btn btn-success btn-sm"
+											ng-disabled="skuDims.vendorIdDims.$invalid || skuDims.rdcIdDims.$invalid || skuDims.skuIdDims.$invalid"
+											ng-click="viewGridSkuDims(vendorIdDims, rdcIdDims, skuIdDims); showGridSkusMissingDim = false; showGridSkuDims = true;"
+											ng-cloak>
+											Show SKU's <br /> Dimensions
+										</button>
+									</div>
+
+								</div>
+							</div>
+						</form>
+					</fieldset>
+				</div>
+
+				<div ng-show="showGridSkusMissingDim">
+					<div
+						ui-if="gridSkusMissingDim.data.length>0"
+						ui-grid="gridSkusMissingDim"
+						class="gridSKUDims"
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ui-grid-exporter
+						ng-style="getGridSkusMissingDimHeight()"></div>
+				</div>
+				<div ng-hide="showGridSkusMissingDim"></div>
+				<div ng-show="showGridSkuDims">
+					<div
+						ui-if="gridSkuDims.data.length>0"
+						ui-grid="gridSkuDims"
+						class="gridSKUDims"
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ui-grid-exporter
+						ng-style="getGridSkuDimsHeight()"></div>
+				</div>
+				<div ng-hide="showGridSkuDims"></div>
+			</div>
+		</div>
+
+		<!-- Load Group Parameter Tab -->
+		<div
+			id="sectionE"
+			class="tab-pane fade">
+			<div ng-controller="LoadParameterController">
+				<div class="tab-buttons">
+					<fieldset>
+						<form
+							class="form-horizontal"
+							name="loadGroupParm">
+							<div class="control-group">
+								<div class="controls">
+									<div class="input-append">
+										<input
+											type="number"
+											min="1"
+											id="loadGroupId"
+											name="loadGroupId"
+											class="input-medium"
+											placeholder="Enter Order Group ID"
+											ng-model="loadGroupId"
+											required> <span
+											style="color: red"
+											ng-show="loadGroupParm.loadGroupId.$dirty && loadGroupParm.loadGroupId.$invalid"
+											ng-cloak> </span> <br> <input
+											type="text"
+											id="dateString"
+											name="dateString"
+											class="input-medium dateInput"
+											placeholder="Select A Date"
+											ng-model="dateString"
+											datepicker-popup={{format}}
+											is-open="opened1"
+											ng-required="true"
+											close-text="Close"
+											ng-cloak /> <span
+											style="color: red"
+											ng-show="loadGroupParm.dateStr.$dirty && loadGroupParm.dateStr.$invalid"
+											ng-cloak> </span>
+										<button
+											type="button"
+											class="btn btn-default"
+											ng-click="open($event,'opened1')">
+											<i
+												class="glyphicon glyphicon-calendar"
+												ng-cloak></i>
+										</button>
+										<br>
+										<button
+											class="btn btn-success btn-sm"
+											ng-disabled="loadGroupParm.loadGroupId.$invalid || loadGroupParm.dateString.$invalid"
+											ng-click="viewGridLoadGroupParm(loadGroupId, dateString); showLoadGroupParm = true; showSkuParm = false;"
+											ng-cloak>
+											Show Load Group <br /> Parameter Details
+										</button>
+									</div>
+
+								</div>
+							</div>
+						</form>
+						<br> <br>
+
+						<form
+							class="form-horizontal"
+							name="skuParm">
+							<div class="control-group">
+								<div class="controls">
+									<div class="input-append">
+										<input
+											type="number"
+											min="1"
+											id="loadGroupId"
+											name="loadGroupId"
+											class="input-medium"
+											placeholder="Enter Order Group ID"
+											ng-model="loadGroupId"
+											required> <span
+											style="color: red"
+											ng-show="skuParm.loadGroupId.$dirty && skuParm.loadGroupId.$invalid"
+											ng-cloak> </span> <br> <input
+											type="text"
+											id="dateString"
+											name="dateString"
+											class="input-medium dateInput"
+											placeholder="Select A Date"
+											ng-model="dateString"
+											datepicker-popup
+											is-open="opened2"
+											ng-required="true"
+											close-text="Close"
+											ng-cloak /> <span
+											style="color: red"
+											ng-show="skuParm.dateStr.$dirty && skuParm.dateStr.$invalid"
+											ng-cloak> </span>
+										<button
+											type="button"
+											class="btn btn-default"
+											ng-click="open($event,'opened2')">
+											<i
+												class="glyphicon glyphicon-calendar"
+												ng-cloak></i>
+										</button>
+										<br> <input
+											type="number"
+											min="1"
+											id="vndrNbr"
+											name="vndrNbr"
+											class="input-medium"
+											placeholder="Enter Vendor Number"
+											ng-model="vndrNbr"
+											required> <span
+											style="color: red"
+											ng-show="skuParm.vndrNbr.$dirty && skuParm.vndrNbr.$invalid"
+											ng-cloak> </span> <br> <input
+											type="number"
+											min="1"
+											id="skuNbr"
+											name="skuNbr"
+											class="input-medium"
+											placeholder="Enter SKU Number"
+											ng-model="skuNbr"
+											required> <span
+											style="color: red"
+											ng-show="skuParm.skuNbr.$dirty && skuParm.skuNbr.$invalid"
+											ng-cloak> </span> <br>
+										<button
+											class="btn btn-success btn-sm"
+											ng-disabled="skuParm.loadGroupId.$invalid || skuParm.dateString.$invalid || skuParm.vndrNbr.$invalid || skuParm.skuNbr.$invalid"
+											ng-click="viewGridSkuParm(loadGroupId, dateString, vndrNbr, skuNbr); showLoadGroupParm = false; showSkuParm = true;"
+											ng-cloak>
+											Show SKU's <br /> Parameter Details
+										</button>
+									</div>
+
+								</div>
+							</div>
+						</form>
+					</fieldset>
+				</div>
+
+				<div ng-show="showLoadGroupParm">
+					<div
+						ui-if="gridLoadGroupParm.data.length>0"
+						ui-grid="gridLoadGroupParm"
+						class="gridParms"
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ui-grid-exporter
+						ng-style="getGridLoadGroupParmHeight()"></div>
+				</div>
+				<div ng-hide="showLoadGroupParm"></div>
+				<div ng-show="showSkuParm">
+					<div
+						ui-if="gridSkuParm.data.length>0"
+						ui-grid="gridSkuParm"
+						class="gridParms"
+						ui-grid-auto-resize
+						ui-grid-resize-columns
+						ui-grid-move-columns
+						ng-cloak
+						ui-grid-exporter
+						ng-style="getGridSkuParmHeight()"></div>
+				</div>
+				<div ng-hide="showSkuParm"></div>
+			</div>
+		</div>
+
+		<!-- Modules -->
+		<script src="js/app.js"></script>
+
+		<!-- Controllers -->
+		<script src="js/controllers/OrderDayController.js"></script>
+		<script src="js/controllers/PrePlanController.js"></script>
+		<script src="js/controllers/ForecastController.js"></script>
+		<script src="js/controllers/SkuDimsController.js"></script>
+		<script src="js/controllers/LoadParameterController.js"></script>
+</body>
+
+</html>
