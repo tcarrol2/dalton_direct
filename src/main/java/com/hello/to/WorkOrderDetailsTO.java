@@ -26,7 +26,7 @@ public class WorkOrderDetailsTO implements Serializable {
 	private String cellFour;
 	private String cellFive;
 	private String cellSix;
-	private String totalAmount;
+	private double totalAmount;
 	
 	public String getInstallerOne() {
 		return installerOne;
@@ -130,10 +130,10 @@ public class WorkOrderDetailsTO implements Serializable {
 	public void setCellSix(String cellSix) {
 		this.cellSix = cellSix;
 	}
-	public String getTotalAmount() {
+	public Double getTotalAmount() {
 		return totalAmount;
 	}
-	public void setTotalAmount(String totalAmount) {
+	public void setTotalAmount(Double totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 	@Override
@@ -156,7 +156,9 @@ public class WorkOrderDetailsTO implements Serializable {
 		result = prime * result + ((jobPhone == null) ? 0 : jobPhone.hashCode());
 		result = prime * result + ((startingDate == null) ? 0 : startingDate.hashCode());
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
-		result = prime * result + ((totalAmount == null) ? 0 : totalAmount.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(totalAmount);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((zip == null) ? 0 : zip.hashCode());
 		return result;
 	}
@@ -249,10 +251,7 @@ public class WorkOrderDetailsTO implements Serializable {
 				return false;
 		} else if (!state.equals(other.state))
 			return false;
-		if (totalAmount == null) {
-			if (other.totalAmount != null)
-				return false;
-		} else if (!totalAmount.equals(other.totalAmount))
+		if (Double.doubleToLongBits(totalAmount) != Double.doubleToLongBits(other.totalAmount))
 			return false;
 		if (zip == null) {
 			if (other.zip != null)
@@ -261,5 +260,14 @@ public class WorkOrderDetailsTO implements Serializable {
 			return false;
 		return true;
 	}
-
+	@Override
+	public String toString() {
+		return "WorkOrderDetailsTO [installerOne=" + installerOne + ", installerTwo=" + installerTwo + ", startingDate="
+				+ startingDate + ", customerName=" + customerName + ", address=" + address + ", state=" + state
+				+ ", city=" + city + ", zip=" + zip + ", jobPhone=" + jobPhone + ", accessCodes=" + accessCodes
+				+ ", descriptionOfWork=" + descriptionOfWork + ", cellOne=" + cellOne + ", cellTwo=" + cellTwo
+				+ ", cellThree=" + cellThree + ", cellFour=" + cellFour + ", cellFive=" + cellFive + ", cellSix="
+				+ cellSix + ", totalAmount=" + totalAmount + "]";
+	}
+	
 }

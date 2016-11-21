@@ -23,4 +23,10 @@ public class WorkOrderFormController {
 		
 		 workOrderManager.setWorkOrderDetails(workOrderDetails);
 	}
+	
+	@RequestMapping(value="/workorders",method=RequestMethod.POST)
+	public void getWorkOrders() {
+		
+		 workOrderManager.getWorkOrders();
+	}
 }

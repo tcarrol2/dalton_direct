@@ -12,9 +12,8 @@ public class WorkOrderManager {
 	@Autowired
 	private WorkOrderDAO workOrderDAO;
 	
-	public List<WorkOrderDetailsTO> getWorkOrderDetailsById(
-			int workOrderId) {
-		return workOrderDAO.getWorkOrderDetailById(workOrderId);
+	public List<WorkOrderDetailsTO> getWorkOrders() {
+		return workOrderDAO.getWorkOrders();
 	}
 	
 	public Object setWorkOrderDetails(WorkOrderDetailsTO workOrderDetailsTO) {

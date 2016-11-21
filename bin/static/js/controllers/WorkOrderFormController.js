@@ -1,4 +1,4 @@
-app.controller('WorkOrderFormController', [ '$scope', '$http', '$interval', '$q', '$rootScope', '$timeout', '$log', 'modal', function($scope, $http, $interval, $q, $rootScope, $timeout, $log, modal) {
+app.controller('WorkOrderFormController', [ '$scope', '$http', '$interval', '$q', '$rootScope', '$timeout', '$log', function($scope, $http, $interval, $q, $rootScope, $timeout, $log) {
 
 	$scope.reset = function(form) {
 	      if (form) {
@@ -11,12 +11,12 @@ app.controller('WorkOrderFormController', [ '$scope', '$http', '$interval', '$q'
 	    $scope.reset();
 	    
 	    $scope.submit = function(){		
-			$scope.workorders.push({ 'installerOne':$scope.user.installerOne, 'installerTwo': $scope.user.installerTwo, 
+		/*	$scope.workorders.push({ 'installerOne':$scope.user.installerOne, 'installerTwo': $scope.user.installerTwo, 
 				'customerName':$scope.user.customerName, 'address':$scope.user.address, 'state':$scope.user.state,
 				'city':$scope.user.city, 'zip':$scope.user.zip, 'joPhone':$scope.user.jobPhone, 'accessCodes':$scope.user.accessCodes,
 				'descriptionOfWork':$scope.user.descriptionOfWork, 'cellOne':$scope.user.cellOne, 'cellTwo':$scope.user.cellTwo,
 				'cellThree':$scope.user.cellThree, 'cellFour':$scope.user.cellour, 'cellFive':$scope.user.cellFive, 
-				'cellSix':$scope.user.cellSix, 'totalAmount':$scope.user.totalAmount});
+				'cellSix':$scope.user.cellSix, 'totalAmount':$scope.user.totalAmount});*/
 			// Writing it to the server
 			//		
 			var dataObj = {
@@ -38,7 +38,7 @@ app.controller('WorkOrderFormController', [ '$scope', '$http', '$interval', '$q'
 					cellSix : $scope.user.cellSix,
 					totalAmount : $scope.user.totalAmount
 			};	
-			var res = $http.post('/saveworkorder', dataObj);
+			var res = $http.post('/workorder/saveworkorder', dataObj);
 			res.success(function(data, status, headers, config) {
 				$scope.message = data;
 			});
