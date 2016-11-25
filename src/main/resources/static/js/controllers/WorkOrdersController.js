@@ -8,10 +8,9 @@ app.controller('WorkOrdersController', [ '$scope', '$http', '$interval', '$q', '
 		enableColumnResize : true,
 		exporterMenuCsv : true,
 		enableGridMenu : true,
-		gridMenuTitleFilter : fakeI18n,
 		columnDefs : [ {
 			displayName : "Work Order ID",
-			field : "workorderID",
+			field : "workOrderId",
 			width : "9%",
 			filter : {
 				placeholder : 'Search By Work Order ID'
@@ -88,17 +87,10 @@ app.controller('WorkOrdersController', [ '$scope', '$http', '$interval', '$q', '
 			},
 		}, {
 			displayName : "Job Description",
-			field : "jobDescription",
+			field : "descriptionOfWork",
 			width : "7%",
 			filter : {
 				placeholder : 'Search By Job Description'
-			},
-		}, {
-			displayName : "Nested Volume",
-			field : "nestedVolume",
-			width : "7%",
-			filter : {
-				placeholder : 'Search By Nested Volume'
 			},
 		}, {
 			displayName : "Cell One",
@@ -162,7 +154,7 @@ app.controller('WorkOrdersController', [ '$scope', '$http', '$interval', '$q', '
 
 		$http.get('/workorder/workorders').success(function(data) {
 			//$scope.gridWorkOrders.data = data.data;
-			$rootScope.gridWorkOrders.data = data;
+			$scope.gridWorkOrders.data = data;
 		}).error(function(data) {
 			alert("There has been an error fetching data: " + data);
 		});

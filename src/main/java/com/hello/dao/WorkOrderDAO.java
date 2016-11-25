@@ -1,6 +1,7 @@
 package com.hello.dao;
 
-import java.sql.Date;
+import java.util.Date;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -99,8 +100,9 @@ public class WorkOrderDAO {
 				
 				WorkOrderDetailsTO detailsTO = new WorkOrderDetailsTO();
 				
+				detailsTO.setWorkOrderId((int)row.get("WORKORDERID"));
 				detailsTO.setInstallerOne((String)row.get("INSTALLERONE"));
-				detailsTO.setInstallerOne((String)row.get("INSTALLERTWO"));
+				detailsTO.setInstallerTwo((String)row.get("INSTALLERTWO"));
 				detailsTO.setStartingDate((Date)row.get("STARTINGDATE"));
 				detailsTO.setCustomerName((String)row.get("CUSTOMERNAME"));
 				detailsTO.setAddress((String)row.get("ADDRESS"));
@@ -114,7 +116,9 @@ public class WorkOrderDAO {
 				detailsTO.setCellTwo((String)row.get("CELLTWO"));
 				detailsTO.setCellThree((String)row.get("CELLTHREE"));
 				detailsTO.setCellFour((String)row.get("CELLFOUR"));
-				detailsTO.setTotalAmount((double)row.get("TOTALCOST"));
+				detailsTO.setCellFive((String)row.get("CELLFIVE"));
+				detailsTO.setCellSix((String)row.get("CELLSIX"));
+				detailsTO.setTotalAmount((BigDecimal)row.get("TOTALCOST"));
 
 				workOrdersList.add(detailsTO);
 			}

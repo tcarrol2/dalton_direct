@@ -1,5 +1,7 @@
 package com.hello.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +26,9 @@ public class WorkOrderFormController {
 		 workOrderManager.setWorkOrderDetails(workOrderDetails);
 	}
 	
-	@RequestMapping(value="/workorders",method=RequestMethod.POST)
-	public void getWorkOrders() {
+	@RequestMapping(value="/workorders",method=RequestMethod.GET)
+	public List<WorkOrderDetailsTO> getWorkOrders() {
 		
-		 workOrderManager.getWorkOrders();
+		 return workOrderManager.getWorkOrders();
 	}
 }

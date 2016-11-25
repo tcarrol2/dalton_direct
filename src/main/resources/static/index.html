@@ -15,7 +15,7 @@
 	content="width=device-width" />
 <link
 	rel="shortcut icon"
-	href="images/TLR.png" />
+	href="images/work orders icon.jpg" />
 <link
 	rel="stylesheet"
 	href="css/bootstrap.css" />
@@ -62,30 +62,21 @@
 				</button>
 				<div class="navbar-brand">
 					<img
-						src="images/work_order.png"
+						src="images/work orders icon.jpg"
 						height="65"
 						width="120"
-						class="tlrImage1"> <img
-						src="images/work_order.jpg"
-						height="65"
-						width="120"
-						class="tlrImage2">
+						class="tlrImage1"
+						style="float: right;">
 				</div>
 			</div>
 		</div>
 	</nav>
-
+	<button><a href="/workOrder.html" type="button" class="btn btn-primary">New Work Order</a></button>
+<div ng-controller="WorkOrdersController">
 					<div
-						ui-if="gridWorkOrders.data.length>0"
 						ui-grid="gridWorkOrders"
-						class="gridWorkOrders"
-						ui-grid-auto-resize
-						ui-grid-resize-columns
-						ui-grid-move-columns
-						ng-cloak
-						ui-grid-exporter
-						ng-style="getGridWorkOrders()"></div>
-
+						class="gridWorkOrders"></div>
+</div>
 
 		<!-- Modules -->
 		<script src="js/app.js"></script>

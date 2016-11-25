@@ -1,6 +1,7 @@
 package com.hello.to;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class WorkOrderDetailsTO implements Serializable {
@@ -9,6 +10,7 @@ public class WorkOrderDetailsTO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private int workOrderId;
 	private String installerOne;
 	private String installerTwo;
 	private Date startingDate;
@@ -26,7 +28,7 @@ public class WorkOrderDetailsTO implements Serializable {
 	private String cellFour;
 	private String cellFive;
 	private String cellSix;
-	private double totalAmount;
+	private BigDecimal totalAmount;
 	
 	public String getInstallerOne() {
 		return installerOne;
@@ -37,7 +39,7 @@ public class WorkOrderDetailsTO implements Serializable {
 	public String getInstallerTwo() {
 		return installerTwo;
 	}
-	public void setIstallerTwo(String installerTwo) {
+	public void setInstallerTwo(String installerTwo) {
 		this.installerTwo = installerTwo;
 	}
 	public Date getStartingDate() {
@@ -130,11 +132,17 @@ public class WorkOrderDetailsTO implements Serializable {
 	public void setCellSix(String cellSix) {
 		this.cellSix = cellSix;
 	}
-	public Double getTotalAmount() {
+	public BigDecimal getTotalAmount() {
 		return totalAmount;
 	}
-	public void setTotalAmount(Double totalAmount) {
+	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+	public int getWorkOrderId() {
+		return workOrderId;
+	}
+	public void setWorkOrderId(int workOrderId) {
+		this.workOrderId = workOrderId;
 	}
 	@Override
 	public int hashCode() {
@@ -156,9 +164,8 @@ public class WorkOrderDetailsTO implements Serializable {
 		result = prime * result + ((jobPhone == null) ? 0 : jobPhone.hashCode());
 		result = prime * result + ((startingDate == null) ? 0 : startingDate.hashCode());
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(totalAmount);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((totalAmount == null) ? 0 : totalAmount.hashCode());
+		result = prime * result + workOrderId;
 		result = prime * result + ((zip == null) ? 0 : zip.hashCode());
 		return result;
 	}
@@ -251,7 +258,12 @@ public class WorkOrderDetailsTO implements Serializable {
 				return false;
 		} else if (!state.equals(other.state))
 			return false;
-		if (Double.doubleToLongBits(totalAmount) != Double.doubleToLongBits(other.totalAmount))
+		if (totalAmount == null) {
+			if (other.totalAmount != null)
+				return false;
+		} else if (!totalAmount.equals(other.totalAmount))
+			return false;
+		if (workOrderId != other.workOrderId)
 			return false;
 		if (zip == null) {
 			if (other.zip != null)
@@ -262,12 +274,13 @@ public class WorkOrderDetailsTO implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "WorkOrderDetailsTO [installerOne=" + installerOne + ", installerTwo=" + installerTwo + ", startingDate="
-				+ startingDate + ", customerName=" + customerName + ", address=" + address + ", state=" + state
-				+ ", city=" + city + ", zip=" + zip + ", jobPhone=" + jobPhone + ", accessCodes=" + accessCodes
-				+ ", descriptionOfWork=" + descriptionOfWork + ", cellOne=" + cellOne + ", cellTwo=" + cellTwo
-				+ ", cellThree=" + cellThree + ", cellFour=" + cellFour + ", cellFive=" + cellFive + ", cellSix="
-				+ cellSix + ", totalAmount=" + totalAmount + "]";
+		return "WorkOrderDetailsTO [workOrderId=" + workOrderId + ", installerOne=" + installerOne + ", installerTwo="
+				+ installerTwo + ", startingDate=" + startingDate + ", customerName=" + customerName + ", address="
+				+ address + ", state=" + state + ", city=" + city + ", zip=" + zip + ", jobPhone=" + jobPhone
+				+ ", accessCodes=" + accessCodes + ", descriptionOfWork=" + descriptionOfWork + ", cellOne=" + cellOne
+				+ ", cellTwo=" + cellTwo + ", cellThree=" + cellThree + ", cellFour=" + cellFour + ", cellFive="
+				+ cellFive + ", cellSix=" + cellSix + ", totalAmount=" + totalAmount + "]";
 	}
+	
 	
 }
