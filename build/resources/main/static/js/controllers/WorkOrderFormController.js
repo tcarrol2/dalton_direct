@@ -10,15 +10,7 @@ app.controller('WorkOrderFormController', [ '$scope', '$http', '$interval', '$q'
 
 	    $scope.reset();
 	    
-	    $scope.submit = function(){		
-		/*	$scope.workorders.push({ 'installerOne':$scope.user.installerOne, 'installerTwo': $scope.user.installerTwo, 
-				'customerName':$scope.user.customerName, 'address':$scope.user.address, 'state':$scope.user.state,
-				'city':$scope.user.city, 'zip':$scope.user.zip, 'joPhone':$scope.user.jobPhone, 'accessCodes':$scope.user.accessCodes,
-				'descriptionOfWork':$scope.user.descriptionOfWork, 'cellOne':$scope.user.cellOne, 'cellTwo':$scope.user.cellTwo,
-				'cellThree':$scope.user.cellThree, 'cellFour':$scope.user.cellour, 'cellFive':$scope.user.cellFive, 
-				'cellSix':$scope.user.cellSix, 'totalAmount':$scope.user.totalAmount});*/
-			// Writing it to the server
-			//		
+	    $scope.submit = function(){			
 			var dataObj = {
 					installerOne : $scope.user.installerOne,
 					installerTwo : $scope.user.installerTwo,
@@ -41,6 +33,7 @@ app.controller('WorkOrderFormController', [ '$scope', '$http', '$interval', '$q'
 			var res = $http.post('/workorder/saveworkorder', dataObj);
 			res.success(function(data, status, headers, config) {
 				$scope.message = data;
+				 window.location.href = "http://work-order.cfapps.io/";
 			});
 			res.error(function(data, status, headers, config) {
 				alert( "failure message: " + JSON.stringify({data: data}));

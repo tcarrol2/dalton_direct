@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="css/navbar-fixed-top.css" />
 <link rel="stylesheet" href="css/loading-bar.css" />
 <link rel="stylesheet" href="css/ui-grid.css" />
+<link rel="stylesheet" href="css/autocomplete.css" />
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -37,6 +38,9 @@
 <script src="js/vendor/loading-bar.js"></script>
 <script src="js/vendor/login.js"></script>
 <script src="js/vendor/draggable.js"></script>
+ <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBES1MnXappmxAECAB4UyDIQP5_M95GAts&amp;libraries=places"
+    async defer></script>
+<script src="js/vendor/autocomplete.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -58,11 +62,8 @@
 			Starting Date: <input type="date" name="startingDate"
 				ng-model="user.startingDate"> <br> Customer Name: <input
 				type="text" name="customerName" ng-model="user.customerName">
-			<br> Address: <input type="text" name="address"
-				ng-model="user.address">State: <input type="text"
-				name="state" ng-model="user.state"> City: <input type="text"
-				name="city" ng-model="user.city"> <br> Zip: <input
-				type="text" name="zip" ng-model="user.zip"> <br> Job
+			<br> Address: <input type="text" name="address" g-places-autocomplete
+				ng-model="user.address" style="width:400px"> <br> Job
 			Phone: <input type="text" name="jobPhone" ng-model="user.jobPhone">
 			Access Codes: <input type="text" name="accessCodes"
 				ng-model="user.accessCodes"> <br> Description of work:
