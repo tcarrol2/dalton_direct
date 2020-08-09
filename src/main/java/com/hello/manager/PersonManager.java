@@ -12,8 +12,7 @@ public class PersonManager {
 	@Autowired
 	private PersonDAO personDAO;
 	
-	public List<PersonDetailsTO> getPersonDetailsBySourceLocationId(
-			String sourceLocationId) {
+	public List<PersonDetailsTO> getPersonDetailsBySourceLocationId(String sourceLocationId) {
 		return personDAO.getPersonDetailsBySourceLocationId(sourceLocationId);
 	}
 }
